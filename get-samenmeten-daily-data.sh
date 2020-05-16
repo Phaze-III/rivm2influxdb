@@ -35,17 +35,7 @@ IFS=,
 cat ${DatastreamsTmpFile} | tr -d '<>|"' | \
 while read Description StreamID ObservationLink
 do
-   case ${Description} in
-   *-pm25_*)
-      Formula="PM25"
-      ;;
-   *-pm10_*)
-      Formula="PM10"
-      ;;
-   *)
-      Formula="${Description##${Sensor}-?-}"
-      ;;
-   esac
+   Formula="${Description##${Sensor}-?-}"
    APIEndPoint="Datastreams(${DatastreamID})/Observations"
    Page=1
    APICall="${ObservationLink}${ODATAFilter}"
@@ -58,12 +48,12 @@ do
       NextLink=$(jq -r '."@iot.nextLink" // "" ' "${jsonFile}")
       APICall=${NextLink}
       Page=$((${Page} + 1))
-      case ${Description} in
-      *_kal)
+      case ${Formula} in
+      pm*)
          cat "${jsonFile}" \
            | jq -r '.value[]|flatten|@csv' \
            | awk -F, -v OFS=, -v Sensor=${Sensor} -v Formula=${Formula} \
-                '{if (length($4) > 0) { gsub(/.000Z/, "+00:00", $3 ) ;print Sensor,$4, $3, Formula }}' \
+                '{if (length($4) > 0) { gsub(/.000Z/, "+00:00", $3 ) ;print Sensor,$4, $3, toupper(Formula) }}' \
            > "${csvFile}"
          cat "${csvFile}" | rivm-to_line_protocol.py | to_influx_db.sh 
          ;;
