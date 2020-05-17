@@ -20,8 +20,27 @@ fi
 
 # Day='2020-05-14' # For testing
 
+Store='pm*' # Default pattern for Formula's to store (PM data only)
+if [ $# -ne 0 ]
+then
+   while [ $# -ne 0 ]
+   do
+      case $1 in
+      -h|--history)
+         # Get all historical data up until ${Day}
+         DateOperator="le"
+         ;;
+      -a|--all)
+         # Send all measurements (not only PM*) to database
+         Store='*'
+         ;;
+      esac
+      shift
+   done
+fi
+
 APIURI='https://api-samenmeten.rivm.nl/v1.0'
-ODATAFilter="?\$filter=date%28phenomenonTime%29+eq+date%28%27${Day}%27%29"
+ODATAFilter="?\$filter=date%28phenomenonTime%29+${DateOperator:-eq}+date%28%27${Day}%27%29"
 
 DatastreamsTmpFile="${DataDir}/${Day}_Datastreams_${Sensor}_$(date +%s).csv"
 DatastreamsLink=$(curl -sS "${APIURI}/Things?\$filter=startswith(name,%27${Sensor}%27)" \
@@ -49,7 +68,7 @@ do
       APICall=${NextLink}
       Page=$((${Page} + 1))
       case ${Formula} in
-      pm*)
+      ${Store})
          cat "${jsonFile}" \
            | jq -r '.value[]|flatten|@csv' \
            | awk -F, -v OFS=, -v Sensor=${Sensor} -v Formula=${Formula} \
