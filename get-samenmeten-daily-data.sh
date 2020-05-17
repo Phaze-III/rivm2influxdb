@@ -29,6 +29,7 @@ then
       -h|--history)
          # Get all historical data up until ${Day}
          DateOperator="le"
+         FileFill="_history"
          ;;
       -a|--all)
          # Send all measurements (not only PM*) to database
@@ -42,7 +43,7 @@ fi
 APIURI='https://api-samenmeten.rivm.nl/v1.0'
 ODATAFilter="?\$filter=date%28phenomenonTime%29+${DateOperator:-eq}+date%28%27${Day}%27%29"
 
-DatastreamsTmpFile="${DataDir}/${Day}_Datastreams_${Sensor}_$(date +%s).csv"
+DatastreamsTmpFile="${DataDir}/${Day}_Datastreams_${Sensor}${FileFill}_$(date +%s).csv"
 DatastreamsLink=$(curl -sS "${APIURI}/Things?\$filter=startswith(name,%27${Sensor}%27)" \
                    | jq -r '.value[]."Datastreams@iot.navigationLink"')
 
@@ -61,8 +62,8 @@ do
 
    while [ -n "${APICall}" ]
    do
-      jsonFile="${DataDir}/${Day}_${Description}_p$(printf %03d ${Page}).json"
-      csvFile="${DataDir}/${Day}_${Description}_p$(printf %03d ${Page}).csv"
+      jsonFile="${DataDir}/${Day}_${Description}${FileFill}_p$(printf %03d ${Page}).json"
+      csvFile="${DataDir}/${Day}_${Description}${FileFill}_p$(printf %03d ${Page}).csv"
       curl -sS --location "${APICall}" > "${jsonFile}"
       NextLink=$(jq -r '."@iot.nextLink" // "" ' "${jsonFile}")
       APICall=${NextLink}
