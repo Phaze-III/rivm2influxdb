@@ -42,3 +42,8 @@ PM-data (raw and calibrated) to InfluxDB.
 
 * https://api-docs.luchtmeetnet.nl/?version=latest
 * https://www.samenmetenaanluchtkwaliteit.nl/dataportaal/api-application-programming-interface
+* https://www.samenmetenaanluchtkwaliteit.nl/dataportaal/kalibratie-van-fijnstofsensoren
+
+* Acknowledgements
+
+* Basics and Python-code adapted from https://github.com/tomru/cram-luftdaten
