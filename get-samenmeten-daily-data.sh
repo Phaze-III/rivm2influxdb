@@ -35,6 +35,10 @@ then
          # Send all measurements (not only PM*) to database
          Store='*'
          ;;
+      -n|--none)
+         # Do not send any measurement to database
+         Store='+none+'
+         ;;
       esac
       shift
    done
