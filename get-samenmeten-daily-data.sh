@@ -1,9 +1,9 @@
 #!/bin/sh
 
-Sensor="${RIVM_SENSORID:-LTD_xxxxx}"  # Set this to your own Sensor ID
-DataDir="${RIVM_DATADIR:-.}"
+Sensor="${SAMENMETEN_SENSORID:-LTD_xxxxx}"  # Set this to your own Sensor ID
+DataDir="${SAMENMETEN_DATADIR:-.}"
 
-export INFLUXDB_DATABASE="${INFLUXDB_DATABASE:-rivm}"
+export INFLUXDB_DATABASE="${INFLUXDB_DATABASE:-samenmeten}"
 export INFLUXDB_HOST="${INFLUXDB_HOST:-localhost}"
 export INFLUXDB_PORT="${INFLUXDB_PORT:-8086}"
 export INFLUXDB_PRECISION="${INFLUXDB_PRECISION:-s}"
