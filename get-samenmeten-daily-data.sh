@@ -79,7 +79,7 @@ do
             cat "${jsonFile}" \
               | jq -r '.value[]|flatten|@csv' \
               | awk -F, -v OFS=, -v Sensor=${Sensor} -v Formula=${Formula} \
-                   '{if (length($4) > 0) { gsub(/.000Z/, "+00:00", $3 ) ;print Sensor,$4, $3, toupper(Formula) }}' \
+                   '{if (length($4) > 0) {gsub(/.000Z/, "+00:00", $3); print Sensor, $4, $3, toupper(Formula)}}' \
               > "${csvFile}"
             cat "${csvFile}" | rivm-to_line_protocol.py | to_influx_db.sh 
             ;;
