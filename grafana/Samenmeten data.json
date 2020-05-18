@@ -56,7 +56,7 @@
   "gnetId": 3763,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1589799913695,
+  "iteration": 1589800340508,
   "links": [],
   "panels": [
     {
@@ -1282,7 +1282,7 @@
         "includeAll": false,
         "index": -1,
         "label": "Messung",
-        "multi": true,
+        "multi": false,
         "name": "Measurement",
         "options": [],
         "query": "SHOW MEASUREMENTS",
@@ -1310,71 +1310,85 @@
         "name": "minInterval",
         "options": [
           {
+            "$$hashKey": "object:243",
             "selected": false,
             "text": "auto",
             "value": "$__auto_interval_minInterval"
           },
           {
+            "$$hashKey": "object:244",
             "selected": false,
             "text": "3m",
             "value": "3m"
           },
           {
+            "$$hashKey": "object:245",
             "selected": false,
             "text": "5m",
             "value": "5m"
           },
           {
+            "$$hashKey": "object:246",
             "selected": false,
             "text": "10m",
             "value": "10m"
           },
           {
+            "$$hashKey": "object:247",
             "selected": false,
             "text": "15m",
             "value": "15m"
           },
           {
+            "$$hashKey": "object:248",
             "selected": false,
             "text": "30m",
             "value": "30m"
           },
           {
+            "$$hashKey": "object:249",
             "selected": true,
             "text": "1h",
             "value": "1h"
           },
           {
+            "$$hashKey": "object:250",
             "selected": false,
             "text": "60s",
             "value": "60s"
           },
           {
+            "$$hashKey": "object:251",
             "selected": false,
             "text": "120s",
             "value": "120s"
           },
           {
+            "$$hashKey": "object:252",
             "selected": false,
             "text": "130s",
             "value": "130s"
           },
           {
+            "$$hashKey": "object:253",
             "selected": false,
             "text": "140s",
             "value": "140s"
           },
           {
+            "$$hashKey": "object:254",
             "selected": false,
             "text": "150s",
             "value": "150s"
           },
           {
+            "$$hashKey": "object:255",
             "selected": false,
             "text": "160s",
             "value": "160s"
           },
           {
+            "$$hashKey": "object:256",
             "selected": false,
             "text": "170s",
             "value": "170s"
@@ -1444,5 +1458,5 @@
   "variables": {
     "list": []
   },
-  "version": 4
+  "version": 5
 }
