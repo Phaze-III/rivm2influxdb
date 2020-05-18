@@ -40,8 +40,9 @@ is made available on a daily basis in the morning of the next day (after
 available data from 'yesterday' from your sensor but only sends the
 PM-data (raw and calibrated) to InfluxDB.
 
-Use -h or --history to bulk fetch all historical data for your sensor
-Use -a or --all to store all measurements instead of only PM-data
+Use -h or --history to bulk fetch all historical data for your sensor.
+
+Use -a or --all to store all measurements instead of only PM-data.
 
 # Additional info
 
