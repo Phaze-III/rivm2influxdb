@@ -56,7 +56,7 @@
   "gnetId": 3763,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1589800340508,
+  "iteration": 1591449490530,
   "links": [],
   "panels": [
     {
@@ -1297,11 +1297,34 @@
         "useTags": false
       },
       {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_LUFTDATEN}",
+        "definition": "SHOW TAG VALUES WITH KEY = node WHERE (_name =~ /^$Measurement$/)",
+        "hide": 1,
+        "includeAll": false,
+        "index": -1,
+        "label": null,
+        "multi": false,
+        "name": "Node",
+        "options": [],
+        "query": "SHOW TAG VALUES WITH KEY = node WHERE (_name =~ /^$Measurement$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
         "auto": true,
         "auto_count": 300,
         "auto_min": "150s",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "1h",
           "value": "1h"
         },
@@ -1310,85 +1333,85 @@
         "name": "minInterval",
         "options": [
           {
-            "$$hashKey": "object:243",
+            "$$hashKey": "object:160",
             "selected": false,
             "text": "auto",
             "value": "$__auto_interval_minInterval"
           },
           {
-            "$$hashKey": "object:244",
+            "$$hashKey": "object:161",
             "selected": false,
             "text": "3m",
             "value": "3m"
           },
           {
-            "$$hashKey": "object:245",
+            "$$hashKey": "object:162",
             "selected": false,
             "text": "5m",
             "value": "5m"
           },
           {
-            "$$hashKey": "object:246",
+            "$$hashKey": "object:163",
             "selected": false,
             "text": "10m",
             "value": "10m"
           },
           {
-            "$$hashKey": "object:247",
+            "$$hashKey": "object:164",
             "selected": false,
             "text": "15m",
             "value": "15m"
           },
           {
-            "$$hashKey": "object:248",
+            "$$hashKey": "object:165",
             "selected": false,
             "text": "30m",
             "value": "30m"
           },
           {
-            "$$hashKey": "object:249",
+            "$$hashKey": "object:166",
             "selected": true,
             "text": "1h",
             "value": "1h"
           },
           {
-            "$$hashKey": "object:250",
+            "$$hashKey": "object:167",
             "selected": false,
             "text": "60s",
             "value": "60s"
           },
           {
-            "$$hashKey": "object:251",
+            "$$hashKey": "object:168",
             "selected": false,
             "text": "120s",
             "value": "120s"
           },
           {
-            "$$hashKey": "object:252",
+            "$$hashKey": "object:169",
             "selected": false,
             "text": "130s",
             "value": "130s"
           },
           {
-            "$$hashKey": "object:253",
+            "$$hashKey": "object:170",
             "selected": false,
             "text": "140s",
             "value": "140s"
           },
           {
-            "$$hashKey": "object:254",
+            "$$hashKey": "object:171",
             "selected": false,
             "text": "150s",
             "value": "150s"
           },
           {
-            "$$hashKey": "object:255",
+            "$$hashKey": "object:172",
             "selected": false,
             "text": "160s",
             "value": "160s"
           },
           {
-            "$$hashKey": "object:256",
+            "$$hashKey": "object:173",
             "selected": false,
             "text": "170s",
             "value": "170s"
