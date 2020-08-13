@@ -40,7 +40,7 @@ do
      "${APIURI}/${APIEndPoint}?page=${Page}&station_number=&formula=&order_by=timestamp_measured&order_direction=asc&start=${Start}&end=${End}" \
      > "${jsonFile}"
    NextPage=$(jq -r '.pagination.next_page' "${jsonFile}")
-   if [ ${NextPage} -eq 0 ]
+   if [ ${NextPage:-0} -eq 0 ]
    then
       echo "Error: No data for ${Start} to ${End}" >&2
       rm "${jsonFile}"
