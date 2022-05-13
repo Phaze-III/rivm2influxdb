@@ -10,8 +10,12 @@ export INFLUXDB_PRECISION="${INFLUXDB_PRECISION:-s}"
 API='https://api.luchtmeetnet.nl/open_api'
 EndPoint='measurements'
 
-StartDay='2020-05-14'
-StopDay='2020-05-15'
+# Set start and end dates to bulk fetch historical data
+StartDay='2022-01-01'
+StopDay='2022-04-01'
+
+# Set a specific station to (re)fetch, leave empty to get all available stations
+Station=''
 
 setdates () {
    if date --version >/dev/null 2>&1
@@ -53,7 +57,7 @@ do
    do
       jsonFile="${DataDir}/rivm-data-${Day}-page$(printf %03d ${Page}).json"
       curl -sS --location \
-        "${API}/${EndPoint}?page=${Page}&station_number=&formula=&order_by=timestamp_measured&order_direction=asc&start=${Start}&end=${End}" \
+        "${API}/${EndPoint}?page=${Page}&station_number=${Station}&formula=&order_by=timestamp_measured&order_direction=asc&start=${Start}&end=${End}" \
         > ${jsonFile}
       NextPage=$(jq -r '.pagination.next_page' "${jsonFile}")
       Page=$((${Page} + 1))
