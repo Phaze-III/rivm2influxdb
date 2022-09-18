@@ -65,12 +65,29 @@ do
       APIEndPoint="Datastreams(${DatastreamID})/Observations"
       Page=1
       APICall="${ObservationLink}${ODATAFilter}"
+      Tries=1
    
       while [ -n "${APICall}" ]
       do
          jsonFile="${DataDir}/${Day}_${Description}${FileFill}_p$(printf %03d ${Page}).json"
          csvFile="${DataDir}/${Day}_${Description}${FileFill}_p$(printf %03d ${Page}).csv"
-         curl -sS --location "${APICall}" > "${jsonFile}"
+         ResultCode=$(curl -sS -w "%{http_code}" --location "${APICall}" -o "${jsonFile}")
+         if [ "${ResultCode}" -ne 200 ] 
+         then
+            if [ ${Tries} -lt 3 ]
+            then
+               echo "ERROR: ${Day} ${Description} page ${Page} try ${Tries}: ${ResultCode}, sleeping..." >&2
+               sleep 60
+               Tries=$((${Tries} + 1))
+               continue
+            else
+               echo "ERROR: Failed to fetch ${Day} (${DateOperator:-eq}) ${Description}, page ${Page} after ${Tries} tries, moving on..." >&2
+               echo "ERROR: ${APICall}" >&2
+               break
+            fi
+         else
+            Tries=1
+         fi
          NextLink=$(jq -r '."@iot.nextLink" // "" ' "${jsonFile}")
          APICall=${NextLink}
          Page=$((${Page} + 1))
