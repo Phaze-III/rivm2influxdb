@@ -52,11 +52,11 @@ do
    DatastreamsTmpFile="${DataDir}/${Day}_Datastreams_${Sensor}${FileFill}_$(date +%s).csv"
    DatastreamsLink=$(curl -sS "${APIURI}/Things?\$filter=startswith(name,%27${Sensor}%27)" \
                       | jq -r '.value[]."Datastreams@iot.navigationLink"')
-   
+
    curl -sS "${DatastreamsLink}" \
       | jq -r ' .value[] | [.description, ."@iot.id", ."Observations@iot.navigationLink"] | @csv' \
       > "${DatastreamsTmpFile}"
-   
+
    IFS=,
    cat ${DatastreamsTmpFile} | tr -d '<>|"' | \
    while read Description StreamID ObservationLink
@@ -66,23 +66,23 @@ do
       Page=1
       APICall="${ObservationLink}${ODATAFilter}"
       Tries=1
-   
+
       while [ -n "${APICall}" ]
       do
          jsonFile="${DataDir}/${Day}_${Description}${FileFill}_p$(printf %03d ${Page}).json"
          csvFile="${DataDir}/${Day}_${Description}${FileFill}_p$(printf %03d ${Page}).csv"
          ResultCode=$(curl -sS -w "%{http_code}" --location "${APICall}" -o "${jsonFile}")
-         if [ "${ResultCode}" -ne 200 ] 
+         if [ "${ResultCode}" -ne 200 ]
          then
             if [ ${Tries} -lt 3 ]
             then
-               echo "ERROR: ${Day} ${Description} page ${Page} try ${Tries}: ${ResultCode}, sleeping..." >&2
+               echo "Error: ${Day} ${Description} page ${Page} try ${Tries}: ${ResultCode}, sleeping..." >&2
                sleep 60
                Tries=$((${Tries} + 1))
                continue
             else
-               echo "ERROR: Failed to fetch ${Day} (${DateOperator:-eq}) ${Description}, page ${Page} after ${Tries} tries, moving on..." >&2
-               echo "ERROR: ${APICall}" >&2
+               echo "Error: Failed to fetch ${Day} (${DateOperator:-eq}) ${Description}, page ${Page} after ${Tries} tries, moving on..." >&2
+               echo "Error: ${APICall}" >&2
                break
             fi
          else
@@ -98,11 +98,11 @@ do
               | awk -F, -v OFS=, -v Sensor=${Sensor} -v Formula=${Formula} \
                    '{if (length($4) > 0) {gsub(/.000Z/, "+00:00", $3); print Sensor, $4, $3, toupper(Formula)}}' \
               > "${csvFile}"
-            cat "${csvFile}" | rivm-to_line_protocol.py | to_influx_db.sh 
+            cat "${csvFile}" | rivm-to_line_protocol.py | to_influx_db.sh
             ;;
          esac
       done
    done
-   
+
    rm -f ${DatastreamsTmpFile}
 done
